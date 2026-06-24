@@ -29,12 +29,12 @@ public class UserServlet extends HttpServlet {
 
         switch (path) {
             case "/login":
-                req.getRequestDispatcher("/login.jsp").forward(req, resp);
-                break;
+               resp.sendRedirect(req.getContextPath() + "/login.jsp");
+        break;
 
             case "/register":
-                req.getRequestDispatcher("/register.jsp").forward(req, resp);
-                break;
+                resp.sendRedirect(req.getContextPath() + "/register.jsp");
+        break;
 
             case "/profile":
                 if (currentUser == null) {
