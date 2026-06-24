@@ -29,41 +29,41 @@ public class UserServlet extends HttpServlet {
 
         switch (path) {
             case "/login":
-                req.getRequestDispatcher("../login.jsp").forward(req, resp);
+                req.getRequestDispatcher("/login.jsp").forward(req, resp);
                 break;
 
             case "/register":
-                req.getRequestDispatcher("../register.jsp").forward(req, resp);
+                req.getRequestDispatcher("/register.jsp").forward(req, resp);
                 break;
 
             case "/profile":
                 if (currentUser == null) {
                     req.setAttribute("error", "Vui lòng đăng nhập hệ thống!");
-                    req.getRequestDispatcher("../login.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/login.jsp").forward(req, resp);
                     return;
                 }
-                req.getRequestDispatcher("../profile.jsp").forward(req, resp);
+                req.getRequestDispatcher("/profile.jsp").forward(req, resp);
                 break;
 
             case "/profile-edit":
                 if (currentUser == null) {
                     req.setAttribute("error", "Vui lòng đăng nhập hệ thống!");
-                    req.getRequestDispatcher("../login.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/login.jsp").forward(req, resp);
                     return;
                 }
                 // Mở trang chứa Form nhập liệu 
-                req.getRequestDispatcher("../profile-edit.jsp").forward(req, resp);
+                req.getRequestDispatcher("/profile-edit.jsp").forward(req, resp);
                 break;
             case "/list":
                 // Chỉ ADMIN hoặc MANAGER mới được xem danh sách nhân viên
                 if (currentUser == null || (!currentUser.getRole().equalsIgnoreCase("ADMIN") && !currentUser.getRole().equalsIgnoreCase("MANAGER"))) {
                     req.setAttribute("error", "Vui lòng đăng nhập bằng tài khoản quản lý!");
-                    req.getRequestDispatcher("../login.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/login.jsp").forward(req, resp);
                     return;
                 }
                 List<User> listU = userDao.getUsersAdvanced(null, null, null);
                 req.setAttribute("list", listU);
-                req.getRequestDispatcher("../ListUser.jsp").forward(req, resp);
+                req.getRequestDispatcher("/ListUser.jsp").forward(req, resp);
                 break;
 
             case "/listCustomer":
@@ -74,7 +74,7 @@ public class UserServlet extends HttpServlet {
                 }
                 List<Customer> listC = userDao.getCustomersAdvanced(null, null);
                 req.setAttribute("customerList", listC);
-                req.getRequestDispatcher("../ListCustomer.jsp").forward(req, resp);
+                req.getRequestDispatcher("/ListCustomer.jsp").forward(req, resp);
                 break;
 
             case "/toggle":
@@ -137,7 +137,7 @@ public class UserServlet extends HttpServlet {
                     if (existingCustomer != null) {
                         if (existingCustomer.getActive() == 0) {
                             req.setAttribute("error", "Tài khoản liên kết với Gmail này đã bị khóa!");
-                            req.getRequestDispatcher("../login.jsp").forward(req, resp);
+                            req.getRequestDispatcher("/login.jsp").forward(req, resp);
                             return;
                         }
 
@@ -171,12 +171,12 @@ public class UserServlet extends HttpServlet {
 
             case "/forgot-password":
                 // GET hiển thị giao diện nhập email
-                req.getRequestDispatcher("../forgot-password.jsp").forward(req, resp);
+                req.getRequestDispatcher("/forgot-password.jsp").forward(req, resp);
                 break;
 
             case "/verify-and-reset":
                 // GET hiển thị giao diện nhập mã OTP và mật khẩu mới
-                req.getRequestDispatcher("../verify-and-reset.jsp").forward(req, resp);
+                req.getRequestDispatcher("/verify-and-reset.jsp").forward(req, resp);
                 break;
 
             default:
@@ -205,7 +205,7 @@ public class UserServlet extends HttpServlet {
 
                 if (!InputValidator.isValidString(usernameLog) || !InputValidator.isValidString(passLog)) {
                     req.setAttribute("error", "Vui lòng nhập đầy đủ Username và Mật khẩu!");
-                    req.getRequestDispatcher("../login.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/login.jsp").forward(req, resp);
                     return;
                 }
 
@@ -235,7 +235,7 @@ public class UserServlet extends HttpServlet {
                 }
 
                 req.setAttribute("error", "Tài khoản hoặc mật khẩu không chính xác hoặc đã bị khóa!");
-                req.getRequestDispatcher("../login.jsp").forward(req, resp);
+                req.getRequestDispatcher("/login.jsp").forward(req, resp);
                 break;
 
             case "/register":
@@ -247,7 +247,7 @@ public class UserServlet extends HttpServlet {
 
                 if (!InputValidator.isValidString(usernameReg) || !InputValidator.isValidString(passReg) || !InputValidator.isValidString(emailReg)) {
                     req.setAttribute("error", "Tài khoản, Email và Mật khẩu không được để trống!");
-                    req.getRequestDispatcher("../register.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/register.jsp").forward(req, resp);
                     return;
                 }
 
@@ -260,7 +260,7 @@ public class UserServlet extends HttpServlet {
                     resp.sendRedirect(req.getContextPath() + "/user/login");
                 } else {
                     req.setAttribute("error", "Đăng ký thất bại! Username hoặc Email có thể đã tồn tại.");
-                    req.getRequestDispatcher("../register.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/register.jsp").forward(req, resp);
                 }
                 break;
 
@@ -279,7 +279,7 @@ public class UserServlet extends HttpServlet {
                 req.setAttribute("oldStatus", statusUser);
                 req.setAttribute("oldRole", roleUser);
 
-                req.getRequestDispatcher("../ListUser.jsp").forward(req, resp);
+                req.getRequestDispatcher("/ListUser.jsp").forward(req, resp);
                 break;
 
             case "/listCustomer":
@@ -295,7 +295,7 @@ public class UserServlet extends HttpServlet {
                 req.setAttribute("oldSearch", txtSearchCus);
                 req.setAttribute("oldStatus", statusCus);
 
-                req.getRequestDispatcher("../ListCustomer.jsp").forward(req, resp);
+                req.getRequestDispatcher("/ListCustomer.jsp").forward(req, resp);
                 break;
 
             case "/forgot-password":
@@ -308,7 +308,7 @@ public class UserServlet extends HttpServlet {
                 if (forgotCustomer != null) {
                     if (forgotCustomer.getActive() == 0) {
                         req.setAttribute("error", "Tài khoản này đang bị khóa, không thể đổi mật khẩu!");
-                        req.getRequestDispatcher("../forgot-password.jsp").forward(req, resp);
+                        req.getRequestDispatcher("/forgot-password.jsp").forward(req, resp);
                         return;
                     }
                     try {
@@ -323,11 +323,11 @@ public class UserServlet extends HttpServlet {
                     } catch (Exception e) {
                         e.printStackTrace();
                         req.setAttribute("error", "Gửi mail thất bại, vui lòng kiểm tra lại cấu hình SMTP Google!");
-                        req.getRequestDispatcher("../forgot-password.jsp").forward(req, resp);
+                        req.getRequestDispatcher("/forgot-password.jsp").forward(req, resp);
                     }
                 } else {
                     req.setAttribute("error", "Thông tin Tài khoản hoặc Email không chính xác!");
-                    req.getRequestDispatcher("../forgot-password.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/forgot-password.jsp").forward(req, resp);
                 }
                 break;
 
@@ -368,13 +368,13 @@ public class UserServlet extends HttpServlet {
                         return; // Ngắt luồng tại đây để không chạy xuống lệnh forward cuối case
                     } else {
                         req.setAttribute("error", "Cập nhật thất bại, vui lòng kiểm tra lại dữ liệu!");
-                        req.getRequestDispatcher("../profile-edit.jsp").forward(req, resp);
+                        req.getRequestDispatcher("/profile-edit.jsp").forward(req, resp);
                         return;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                     req.setAttribute("error", "Đã xảy ra lỗi hệ thống: " + e.getMessage());
-                    req.getRequestDispatcher("../profile-edit.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/profile-edit.jsp").forward(req, resp);
                     return;
                 }
                 // Bỏ hoặc không cho luồng đi tiếp xuống lệnh forward cũ để tránh lỗi IllegalStateException
@@ -386,7 +386,7 @@ public class UserServlet extends HttpServlet {
 
                 if (session == null) {
                     req.setAttribute("error", "Phiên làm việc đã hết hạn, vui lòng thao tác lại!");
-                    req.getRequestDispatcher("../forgot-password.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/forgot-password.jsp").forward(req, resp);
                     return;
                 }
 
@@ -395,13 +395,13 @@ public class UserServlet extends HttpServlet {
 
                 if (inputOtp == null || !inputOtp.equals(sessionOtp)) {
                     req.setAttribute("error", "Mã OTP không chính xác hoặc đã hết hạn!");
-                    req.getRequestDispatcher("../verify-and-reset.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/verify-and-reset.jsp").forward(req, resp);
                     return;
                 }
 
                 if (newPassword == null || !newPassword.equals(confirmPassword)) {
                     req.setAttribute("error", "Mật khẩu nhập lại không trùng khớp!");
-                    req.getRequestDispatcher("../verify-and-reset.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/verify-and-reset.jsp").forward(req, resp);
                     return;
                 }
 
@@ -414,10 +414,10 @@ public class UserServlet extends HttpServlet {
                     session.removeAttribute("resetEmail");
 
                     req.setAttribute("success", "Đổi mật khẩu thành công! Mời bạn đăng nhập lại.");
-                    req.getRequestDispatcher("../login.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/login.jsp").forward(req, resp);
                 } else {
                     req.setAttribute("error", "Cập nhật mật khẩu thất bại. Hệ thống có lỗi xảy ra!");
-                    req.getRequestDispatcher("../verify-and-reset.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/verify-and-reset.jsp").forward(req, resp);
                 }
                 break;
 
