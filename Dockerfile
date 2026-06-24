@@ -6,7 +6,7 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Copy file .war từ thư mục dist của NetBeans vào Tomcat và đổi tên thành ROOT.war
 # (Giúp bạn truy cập thẳng qua link web chính mà không cần gõ tên dự án phía sau)
-COPY dist/Project.war /usr/local/tomcat/webapps/ROOT.war
+COPY dist/Project_Test.war /usr/local/tomcat/webapps/ROOT.war
 
 # Mở cổng 8080 để kết nối mạng với Render
 EXPOSE 8080
